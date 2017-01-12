@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 public class Teste {
 	public static void main(String[] args) throws ParseException {
@@ -30,8 +31,8 @@ public class Teste {
 		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = (Date)formatter.parse("2017/01/11");
 		
-		Query query = manager.createNamedQuery ("PagamentoProdutos.findByDate");
-		
+		TypedQuery query = manager.createQuery("SELECT p FROM PagamentoProdutos p WHERE p.dia = :dia", PagamentoProdutos.class);
+		//Query query = manager.createNamedQuery ("PagamentoProdutos.findByDate");
 		query.setParameter("dia",date, TemporalType.DATE);
 		
 		List<PagamentoProdutos> pagamentosProdutosByDate = query.getResultList();
